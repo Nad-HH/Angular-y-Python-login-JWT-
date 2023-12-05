@@ -8,19 +8,19 @@ CORS(app)  # Esto habilita CORS para toda la aplicación
 # Resto de tu configuración y rutas
 #cors = CORS(app, resources={r"/api/*": {"origins": "http://localhost:4200"}})
 
-app.config['JWT_SECRET_KEY'] = 'your_secret_key'  # Cambia esto por una clave segura
+app.config['JWT_SECRET_KEY'] = 'your_secret_key' 
 jwt = JWTManager(app)
 
 #******************prueba de microservicio************************************
 # Definir access_token con un valor predeterminado o nulo
 access_token = None
 
-url_microservicio2 = "http://localhost:5001/microservicio2"  #  puerto del mciroservicio
+url_microservicio2 = "http://localhost:5001/microservicio2" 
 if access_token is not None:
     token_jwt = access_token  # Reemplaza con el token JWT real
-# Definir token_jwt antes de la prueba del microservicio
+
 token_jwt = None
-# Verificar si token_jwt está definida antes de utilizarla
+
 if token_jwt is not None:
     headers = {"Authorization": f"Bearer {token_jwt}"}
 
@@ -37,12 +37,12 @@ else:
     print("token_jwt no está definido. No se realizará la prueba del microservicio.")
 
 
-# Nueva ruta de prueba para verificar la conexión con el microservicio 2
+
 @app.route('/test-microservicio2', methods=['GET'])
 def test_microservicio2():
     try:
         url_microservicio2 = "http://localhost:5001/microservicio2"
-        headers = {"Authorization": f"Bearer {token_jwt}"}  # Asegúrate de enviar el token
+        headers = {"Authorization": f"Bearer {token_jwt}"}  
 
         response = requests.get(url_microservicio2, headers=headers)
 
