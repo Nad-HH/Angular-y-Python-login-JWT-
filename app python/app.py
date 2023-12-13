@@ -11,53 +11,6 @@ CORS(app)  # Esto habilita CORS para toda la aplicación
 app.config['JWT_SECRET_KEY'] = 'your_secret_key' 
 jwt = JWTManager(app)
 
-#******************prueba de microservicio************************************
-# Definir access_token con un valor predeterminado o nulo
-access_token = None
-
-url_microservicio2 = "http://localhost:5001/microservicio2" 
-if access_token is not None:
-    token_jwt = access_token  # Reemplaza con el token JWT real
-
-token_jwt = None
-
-if token_jwt is not None:
-    headers = {"Authorization": f"Bearer {token_jwt}"}
-
-    # Realiza una solicitud al segundo microservicio con el token en la cabecera
-    response = requests.get(url_microservicio2, headers=headers)
-
-    # Procesa la respuesta según sea necesario
-    if response.status_code == 200:
-        datos_microservicio2 = response.json()
-        print("Datos del segundo microservicio:", datos_microservicio2)
-    else:
-        print("Error al obtener datos del segundo microservicio. Código de estado:", response.status_code)
-else:
-    print("token_jwt no está definido. No se realizará la prueba del microservicio.")
-
-
-
-@app.route('/test-microservicio2', methods=['GET'])
-def test_microservicio2():
-    try:
-        url_microservicio2 = "http://localhost:5001/microservicio2"
-        headers = {"Authorization": f"Bearer {token_jwt}"}  
-
-        response = requests.get(url_microservicio2, headers=headers)
-
-        if response.status_code == 200:
-            datos_microservicio2 = response.json()
-            return jsonify(message=f'Conexión exitosa con microservicio 2. Datos recibidos: {datos_microservicio2}'), 200
-        else:
-            app.logger.error(f'Error al conectar con microservicio 2. Código de estado: {response.status_code}. Respuesta: {response.text}')
-            return jsonify(message=f'Error al conectar con microservicio 2. Código de estado: {response.status_code}'), 500
-    except Exception as e:
-        app.logger.error(f'Error interno al procesar la solicitud de prueba: {str(e)}')
-        return jsonify(message='Error interno al procesar la solicitud de prueba'), 500
-#*****************************************************************************
-
-
 
 # Modelo de Usuario (solo con propósito demostrativo)
 class User:
